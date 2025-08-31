@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Building } from 'lucide-react';
+import { Calendar, Building } from 'lucide-react';
 import { useData } from '../context/DataContext';
 
 const Experience: React.FC = () => {

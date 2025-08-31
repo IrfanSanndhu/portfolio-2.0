@@ -1,11 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useData } from '../context/DataContext';
-import { useTheme } from '../context/ThemeContext';
 
 const HomePage: React.FC = () => {
   const { profile } = useData();
-  const { theme } = useTheme();
 
   if (!profile) return null;
 

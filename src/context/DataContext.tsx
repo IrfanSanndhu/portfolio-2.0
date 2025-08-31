@@ -1,44 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-// import type { Profile, Project, Skill, Experience } from '../types';
-// import { fetchProfile, fetchProjects, fetchSkills, fetchExperiences } from '../utils/firestore';
+import type { Profile, Project, Skill, Experience } from '../types';
+import { fetchProfile, fetchProjects, fetchSkills, fetchExperiences } from '../utils/firestore';
 import { sampleProfile, sampleProjects, sampleSkills, sampleExperiences } from '../data/sampleData';
-
-// Temporary inline types to fix export issue
-interface Profile {
-  headline: string;
-  slogan: string;
-  summary: string;
-  currentPosition: string;
-  aboutMe: string;
-  quote: string;
-  quoteAuthor: string;
-  funFacts: string[];
-}
-
-interface Project {
-  id: string;
-  projectName: string;
-  description: string;
-  languagesUsed: string[];
-  githubLink: string;
-  liveLink: string;
-  thumbnail: string;
-}
-
-interface Skill {
-  id: string;
-  title: string;
-  skills: string[];
-}
-
-interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  duration: string;
-  description: string[];
-}
 
 interface DataContextType {
   profile: Profile | null;
@@ -74,29 +38,46 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
 
   const fetchAllData = async () => {
     try {
+      console.log('🔄 Starting to fetch data from Firebase...');
       setLoading(true);
       setError(null);
+
+      // Fetch all data from Firebase
+      const [profileData, projectsData, skillsData, experiencesData] = await Promise.all([
+        fetchProfile(),
+        fetchProjects(),
+        fetchSkills(),
+        fetchExperiences()
+      ]);
+
+      console.log('📊 Firebase data received:', {
+        profile: profileData,
+        projects: projectsData?.length || 0,
+        skills: skillsData?.length || 0,
+        experiences: experiencesData?.length || 0
+      });
+
+      // Set data from Firebase
+      setProfile(profileData);
+      setProjects(projectsData || []);
+      setSkills(skillsData || []);
+      setExperiences(experiencesData || []);
+
+      console.log('✅ Firebase data loaded successfully!');
+    } catch (err) {
+      console.error('❌ Error loading data from Firebase:', err);
       
-      // For now, use sample data. Replace with Firebase calls when ready
-      // const [profileData, projectsData, skillsData, experiencesData] = await Promise.all([
-      //   fetchProfile(),
-      //   fetchProjects(),
-      //   fetchSkills(),
-      //   fetchExperiences()
-      // ]);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Fallback to sample data if Firebase fails
+      console.log('🔄 Falling back to sample data...');
       setProfile(sampleProfile);
       setProjects(sampleProjects);
       setSkills(sampleSkills);
       setExperiences(sampleExperiences);
-    } catch (err) {
-      setError('Failed to fetch data. Please try again later.');
-      console.error('Error fetching data:', err);
+      
+      setError(`Failed to load data from Firebase: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
+      console.log('🏁 Data loading completed. Loading:', false);
     }
   };
 

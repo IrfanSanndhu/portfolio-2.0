@@ -45,6 +45,28 @@ const PortfolioContent: React.FC = () => {
     );
   }
 
+  if (!profile) {
+    console.log('No profile data available');
+    return (
+      <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">
+            No Data Available
+          </h2>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">
+            Please check the console for errors.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-accent text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   console.log('Rendering full portfolio with routing...');
   return (
     <>

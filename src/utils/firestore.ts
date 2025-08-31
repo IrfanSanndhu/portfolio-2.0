@@ -7,7 +7,7 @@ import {
   orderBy 
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { Profile, Project, Skill, Experience } from '../types';
+import type { Profile, Project, Skill, Experience } from '../types';
 
 // Fetch profile data
 export const fetchProfile = async (): Promise<Profile | null> => {

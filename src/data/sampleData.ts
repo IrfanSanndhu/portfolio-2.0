@@ -1,40 +1,4 @@
-// import { Profile, Project, Skill, Experience } from '../types';
-
-// Temporary inline types to fix export issue
-interface Profile {
-  headline: string;
-  slogan: string;
-  summary: string;
-  currentPosition: string;
-  aboutMe: string;
-  quote: string;
-  quoteAuthor: string;
-  funFacts: string[];
-}
-
-interface Project {
-  id: string;
-  projectName: string;
-  description: string;
-  languagesUsed: string[];
-  githubLink: string;
-  liveLink: string;
-  thumbnail: string;
-}
-
-interface Skill {
-  id: string;
-  title: string;
-  skills: string[];
-}
-
-interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  duration: string;
-  description: string[];
-}
+import type { Profile, Project, Skill, Experience } from '../types';
 
 export const sampleProfile: Profile = {
   headline: "Full-Stack Developer & UI/UX Enthusiast",

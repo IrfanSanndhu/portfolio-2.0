@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, Coffee, ExternalLink } from 'lucide-react';
+import { Download, Coffee } from 'lucide-react';
 import { useData } from '../context/DataContext';
 
 const Home: React.FC = () => {
