@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, BookOpen, Youtube
 import { useData } from '../context/DataContext';
 
 const Contact: React.FC = () => {
-  const { profile, loading } = useData();
+  const { profile } = useData();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
