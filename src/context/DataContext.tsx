@@ -69,15 +69,20 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
       
       // Fallback to sample data if Firebase fails
       console.log('🔄 Falling back to sample data...');
+      console.log('📋 Sample profile data:', sampleProfile);
+      
       setProfile(sampleProfile);
       setProjects(sampleProjects);
       setSkills(sampleSkills);
       setExperiences(sampleExperiences);
       
+      console.log('✅ Sample data loaded successfully!');
+      
       setError(`Failed to load data from Firebase: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
       console.log('🏁 Data loading completed. Loading:', false);
+      console.log('📊 Final profile state:', profile);
     }
   };
 

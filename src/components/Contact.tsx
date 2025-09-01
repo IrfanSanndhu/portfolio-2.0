@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, BookOpen, Youtube } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 const Contact: React.FC = () => {
+  const { profile, loading } = useData();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
+
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -62,83 +66,140 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Contact Details */}
-            <div className="space-y-6">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div className="p-3 bg-accent/10 rounded-full">
-                  <Mail size={20} className="text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    Email
-                  </h4>
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                    hello@example.com
-                  </p>
-                </div>
-              </motion.div>
+            <div className="space-y-4">
+              {profile?.contact?.email && (
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="flex items-center gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700"
+                >
+                  <div className="p-3 bg-accent/10 rounded-full">
+                    <Mail size={20} className="text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                      Email
+                    </h4>
+                    <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                      {profile.contact.email}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div className="p-3 bg-accent/10 rounded-full">
-                  <Phone size={20} className="text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    Phone
-                  </h4>
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                    +1 (555) 123-4567
-                  </p>
-                </div>
-              </motion.div>
+              {profile?.contact?.phone && (
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="flex items-center gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700"
+                >
+                  <div className="p-3 bg-accent/10 rounded-full">
+                    <Phone size={20} className="text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                      Phone
+                    </h4>
+                    <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                      {profile.contact.phone}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div className="p-3 bg-accent/10 rounded-full">
-                  <MapPin size={20} className="text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    Location
-                  </h4>
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                    San Francisco, CA
-                  </p>
-                </div>
-              </motion.div>
+              {profile?.contact?.location && (
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="flex items-center gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700"
+                >
+                  <div className="p-3 bg-accent/10 rounded-full">
+                    <MapPin size={20} className="text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                      Location
+                    </h4>
+                    <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                      {profile.contact.location}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Social Links */}
-            <div>
-              <h4 className="text-lg font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">
-                Follow Me
-              </h4>
-              <div className="flex gap-4">
-                {[
-                  { icon: Github, href: '#', label: 'GitHub' },
-                  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-                  { icon: Twitter, href: '#', label: 'Twitter' }
-                ].map((social, index) => (
-                  <motion.a
-                    key={index}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                    href={social.href}
-                    className="p-3 bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-accent hover:text-white transition-all duration-200"
-                    aria-label={social.label}
-                  >
-                    <social.icon size={20} />
-                  </motion.a>
-                ))}
+            {(profile?.contact?.github || profile?.contact?.linkedin || profile?.contact?.x || profile?.contact?.udemy || profile?.contact?.youtube) && (
+              <div>
+                <h4 className="text-lg font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">
+                  Follow Me
+                </h4>
+                <div className="flex gap-4">
+                  {profile.contact.github && (
+                    <motion.a
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.9 }}
+                      href={profile.contact.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-accent hover:text-white transition-all duration-200"
+                      aria-label="GitHub"
+                    >
+                      <Github size={20} />
+                    </motion.a>
+                  )}
+                  {profile.contact.linkedin && (
+                    <motion.a
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.9 }}
+                      href={profile.contact.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-accent hover:text-white transition-all duration-200"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin size={20} />
+                    </motion.a>
+                  )}
+                  {profile.contact.x && (
+                    <motion.a
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.9 }}
+                      href={profile.contact.x}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-accent hover:text-white transition-all duration-200"
+                      aria-label="X (Twitter)"
+                    >
+                      <Twitter size={20} />
+                    </motion.a>
+                  )}
+                  {profile.contact.udemy && (
+                    <motion.a
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.9 }}
+                      href={profile.contact.udemy}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-accent hover:text-white transition-all duration-200"
+                      aria-label="Udemy"
+                    >
+                      <BookOpen size={20} />
+                    </motion.a>
+                  )}
+                  {profile.contact.youtube && (
+                    <motion.a
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.9 }}
+                      href={profile.contact.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-accent hover:text-white transition-all duration-200"
+                      aria-label="YouTube"
+                    >
+                      <Youtube size={20} />
+                    </motion.a>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* Contact Form */}

@@ -14,7 +14,17 @@ export const sampleProfile: Profile = {
     "I've contributed to 15+ open-source projects",
     "I once fixed a production bug while on vacation",
     "My code has been deployed to space (satellite software)"
-  ]
+  ],
+  contact: {
+    email: "hello@example.com",
+    phone: "+1 (555) 123-4567",
+    location: "San Francisco, CA",
+    github: "https://github.com/yourusername",
+    linkedin: "https://linkedin.com/in/yourusername",
+    x: "https://x.com/yourusername",
+    udemy: "https://udemy.com/user/yourusername",
+    youtube: "https://youtube.com/@yourusername"
+  }
 };
 
 export const sampleProjects: Project[] = [

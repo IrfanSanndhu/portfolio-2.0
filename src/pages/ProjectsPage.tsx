@@ -46,22 +46,26 @@ const ProjectsPage: React.FC = () => {
                   </div>
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-xl flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-white dark:bg-gray-800 rounded-full hover:scale-110 transition-transform"
-                      >
-                        <Github className="w-5 h-5 text-gray-800 dark:text-white" />
-                      </a>
-                      <a
-                        href={project.liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-white dark:bg-gray-800 rounded-full hover:scale-110 transition-transform"
-                      >
-                        <ExternalLink className="w-5 h-5 text-gray-800 dark:text-white" />
-                      </a>
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white dark:bg-gray-800 rounded-full hover:scale-110 transition-transform"
+                        >
+                          <Github className="w-5 h-5 text-gray-800 dark:text-white" />
+                        </a>
+                      )}
+                      {project.liveLink && (
+                        <a
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white dark:bg-gray-800 rounded-full hover:scale-110 transition-transform"
+                        >
+                          <ExternalLink className="w-5 h-5 text-gray-800 dark:text-white" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -95,24 +99,28 @@ const ProjectsPage: React.FC = () => {
 
                 {/* Project Links */}
                 <div className="flex gap-4">
-                  <a
-                    href={project.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-3 bg-card-light dark:bg-card-dark text-text-primary-light dark:text-text-primary-dark rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700"
-                  >
-                    <Github className="w-4 h-4" />
-                    View Code
-                  </a>
-                  <a
-                    href={project.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-blue-600 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Live Demo
-                  </a>
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 bg-card-light dark:bg-card-dark text-text-primary-light dark:text-text-primary-dark rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700"
+                    >
+                      <Github className="w-4 h-4" />
+                      View Code
+                    </a>
+                  )}
+                  {project.liveLink && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-blue-600 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Live Demo
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

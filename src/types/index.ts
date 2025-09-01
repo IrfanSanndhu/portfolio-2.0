@@ -7,6 +7,16 @@ export interface Profile {
   quote: string;
   quoteAuthor: string;
   funFacts: string[];
+  contact?: {
+    email?: string;
+    phone?: string;
+    location?: string;
+    github?: string;
+    linkedin?: string;
+    x?: string;
+    udemy?: string;
+    youtube?: string;
+  };
 }
 
 export interface Project {
