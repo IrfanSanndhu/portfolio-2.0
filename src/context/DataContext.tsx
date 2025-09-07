@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Profile, Project, Skill, Experience } from '../types';
-import { fetchProfile, fetchProjects, fetchSkills, fetchExperiences } from '../utils/firestore';
+import type { Profile, Cv_link, Project, Skill, Experience } from '../types';
+import { fetchProfile, fetchcvlink, fetchProjects, fetchSkills, fetchExperiences } from '../utils/firestore';
 import { sampleProfile, sampleProjects, sampleSkills, sampleExperiences } from '../data/sampleData';
 
 interface DataContextType {
   profile: Profile | null;
+  cv_link: Cv_link | null;
   projects: Project[];
   skills: Skill[];
   experiences: Experience[];
@@ -30,6 +31,7 @@ interface DataProviderProps {
 
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [cv_link, setCv_link] = useState<Cv_link | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [experiences, setExperiences] = useState<Experience[]>([]);
@@ -38,51 +40,36 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
 
   const fetchAllData = async () => {
     try {
-      console.log('🔄 Starting to fetch data from Firebase...');
       setLoading(true);
       setError(null);
 
       // Fetch all data from Firebase
-      const [profileData, projectsData, skillsData, experiencesData] = await Promise.all([
+      const [profileData, cv_linkData, projectsData, skillsData, experiencesData] = await Promise.all([
         fetchProfile(),
+        fetchcvlink(),
         fetchProjects(),
         fetchSkills(),
         fetchExperiences()
       ]);
 
-      console.log('📊 Firebase data received:', {
-        profile: profileData,
-        projects: projectsData?.length || 0,
-        skills: skillsData?.length || 0,
-        experiences: experiencesData?.length || 0
-      });
-
       // Set data from Firebase
       setProfile(profileData);
+      setCv_link(cv_linkData);
       setProjects(projectsData || []);
       setSkills(skillsData || []);
       setExperiences(experiencesData || []);
-
-      console.log('✅ Firebase data loaded successfully!');
     } catch (err) {
       console.error('❌ Error loading data from Firebase:', err);
       
       // Fallback to sample data if Firebase fails
-      console.log('🔄 Falling back to sample data...');
-      console.log('📋 Sample profile data:', sampleProfile);
-      
       setProfile(sampleProfile);
       setProjects(sampleProjects);
       setSkills(sampleSkills);
       setExperiences(sampleExperiences);
       
-      console.log('✅ Sample data loaded successfully!');
-      
       setError(`Failed to load data from Firebase: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
-      console.log('🏁 Data loading completed. Loading:', false);
-      console.log('📊 Final profile state:', profile);
     }
   };
 
@@ -92,6 +79,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
 
   const value: DataContextType = {
     profile,
+    cv_link,
     projects,
     skills,
     experiences,

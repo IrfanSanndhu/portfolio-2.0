@@ -13,18 +13,13 @@ import Loading from './components/Loading';
 import { useData } from './context/DataContext';
 
 const PortfolioContent: React.FC = () => {
-  console.log('PortfolioContent rendering...');
   const { profile, loading, error } = useData();
 
-  console.log('DataContext values:', { profile, loading, error });
-
   if (loading) {
-    console.log('Showing loading component...');
     return <Loading />;
   }
 
   if (error) {
-    console.log('Showing error component...', error);
     return (
       <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -46,7 +41,6 @@ const PortfolioContent: React.FC = () => {
   }
 
   if (!profile) {
-    console.log('No profile data available');
     return (
       <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -67,7 +61,6 @@ const PortfolioContent: React.FC = () => {
     );
   }
 
-  console.log('Rendering full portfolio with routing...');
   return (
     <>
       <Navbar />
@@ -86,7 +79,6 @@ const PortfolioContent: React.FC = () => {
 };
 
 function App() {
-  console.log('App component rendering...');
   return (
     <Router>
       <ThemeProvider>

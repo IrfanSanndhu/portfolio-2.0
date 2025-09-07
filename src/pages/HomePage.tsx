@@ -1,9 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useData } from '../context/DataContext';
+import { Download, Loader2 } from 'lucide-react';
 
 const HomePage: React.FC = () => {
-  const { profile } = useData();
+  const { profile, cv_link } = useData();
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    if (isDownloading) return;
+    
+    setIsDownloading(true);
+    
+    try {
+      if (cv_link?.downloadUrl) {
+        // Create a temporary link to trigger download
+        const link = document.createElement('a');
+        link.href = cv_link.downloadUrl;
+        link.download = 'My-Latest_CV.pdf';
+        link.rel = 'noopener noreferrer';
+        
+        // Add event listener to detect when download actually starts
+        const handleClick = () => {
+          // Keep button disabled for 5 seconds after download starts
+          setTimeout(() => {
+            setIsDownloading(false);
+          }, 7000);
+        };
+        
+        link.addEventListener('click', handleClick);
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Fallback: reset after 10 seconds if something goes wrong
+        setTimeout(() => {
+          if (isDownloading) {
+            setIsDownloading(false);
+          }
+        }, 10000);
+      } else {
+        alert('CV download link is not available. Please contact me directly.');
+        setIsDownloading(false);
+      }
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please try again.');
+      setIsDownloading(false);
+    }
+  };
 
   if (!profile) return null;
 
@@ -123,8 +169,26 @@ const HomePage: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.8 }}
           className="mt-16 flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <button className="px-8 py-4 bg-accent text-white rounded-lg hover:bg-blue-600 transition-colors font-medium">
-            Download CV
+          <button 
+            className={`px-8 py-4 rounded-lg transition-colors font-medium flex items-center gap-2 ${
+              isDownloading 
+                ? 'bg-gray-400 text-white cursor-not-allowed' 
+                : 'bg-accent text-white hover:bg-blue-600'
+            }`}
+            onClick={handleDownload}
+            disabled={isDownloading}
+          >
+            {isDownloading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Downloading...
+              </>
+            ) : (
+              <>
+                <Download className="w-5 h-5" />
+                Download CV
+              </>
+            )}
           </button>
           <button className="px-8 py-4 bg-card-light dark:bg-card-dark text-text-primary-light dark:text-text-primary-dark rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium border border-gray-200 dark:border-gray-700">
             Buy Me a Coffee

@@ -7,7 +7,7 @@ import {
   orderBy 
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { Profile, Project, Skill, Experience } from '../types';
+import type { Profile, Cv_link, Project, Skill, Experience } from '../types';
 
 // Fetch profile data
 export const fetchProfile = async (): Promise<Profile | null> => {
@@ -25,6 +25,23 @@ export const fetchProfile = async (): Promise<Profile | null> => {
   }
 };
 
+// Fetch CV link
+export const fetchcvlink = async (): Promise<Cv_link | null> => {
+  try {
+    const cvDoc = doc(db, 'cv_link', 'cv_link');
+    const cvSnap = await getDoc(cvDoc);
+    
+    if (cvSnap.exists()) {
+      const data = cvSnap.data();
+      return data as Cv_link;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching CV link:', error);
+    return null;
+  }
+};
 // Fetch all projects
 export const fetchProjects = async (): Promise<Project[]> => {
   try {

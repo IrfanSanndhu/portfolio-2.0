@@ -19,6 +19,10 @@ export interface Profile {
   };
 }
 
+export interface Cv_link {
+  downloadUrl: string;
+}
+
 export interface Project {
   id: string;
   projectName: string;
