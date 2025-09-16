@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">
-            Portfolio
+            Irfan Lateef
           </Link>
 
           {/* Desktop Navigation */}

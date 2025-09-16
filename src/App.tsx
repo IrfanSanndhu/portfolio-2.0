@@ -10,6 +10,7 @@ import ExperiencePage from './pages/ExperiencePage';
 import ContactPage from './pages/ContactPage';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
+import ScrollToTop from './components/ScrollToTop';
 import { useData } from './context/DataContext';
 
 const PortfolioContent: React.FC = () => {
@@ -81,6 +82,7 @@ const PortfolioContent: React.FC = () => {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <ThemeProvider>
         <DataProvider>
           <PortfolioContent />
