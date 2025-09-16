@@ -10,7 +10,7 @@ import ExperiencePage from './pages/ExperiencePage';
 import ContactPage from './pages/ContactPage';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './utils/ScrollToTop';
 import { useData } from './context/DataContext';
 
 const PortfolioContent: React.FC = () => {
